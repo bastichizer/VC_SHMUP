@@ -40,13 +40,13 @@ INT WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 	{
 		sizeof(WNDCLASSEX), CS_CLASSDC, MsgProc, 0L, 0L,
 		GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
-		"Castle Builder", NULL
+		"VC Shoot Em Up", NULL
 	};
 	RegisterClassEx(&wc);
 
 	// Create the application's window
 	DWORD windowStyle = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
-	HWND hWnd = CreateWindowEx(NULL, "Castle Builder", "Castle Builder", windowStyle, 0, 0, g_windowWidth, g_windowHeight + 40, NULL, NULL, wc.hInstance, NULL);
+	HWND hWnd = CreateWindowEx(NULL, "VC Shoot Em Up", "VC Shoot Em Up", windowStyle, 0, 0, g_windowWidth, g_windowHeight + 40, NULL, NULL, wc.hInstance, NULL);
 
 	InputManager::Get()->Init(hWnd);
 
@@ -83,7 +83,7 @@ INT WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 		//RenderManager::Get()->Cleanup();
 	}
 
-	UnregisterClass("Castle Builder", wc.hInstance);
+	UnregisterClass("VC Shoot Em Up", wc.hInstance);
 
 	return 0;
 }

@@ -1,21 +1,20 @@
 #include "SHMUP_App.h"
 #include "RenderManager.h"
+#include "SHMUP_GameManager.h"
 
-SHMUP_App::SHMUP_App()
+SHMUP_App::SHMUP_App() : VC_App()
 {
-	m_pGameManager = NULL;
+
 }
 
 SHMUP_App::~SHMUP_App()
 {
-	if (m_pGameManager)
-	{
-		delete m_pGameManager;
-	}
+
 }
 
 void SHMUP_App::Init()
 {
+	VC_App::Init();
 	m_pGameManager = new SHMUP_GameManager(this);
 }
 

@@ -18,7 +18,7 @@ public:
 	void GridTogglePressed(int n);
 	void ShopButtonPressed(int n);
 
-	SHMUP_GameManager* GetGameManager() { return m_pGameManager; }
+	SHMUP_GameManager* GetSHMUP_GameManager() { return m_pGameManager; }
 
 private:
 	SHMUP_GameManager* m_pGameManager;

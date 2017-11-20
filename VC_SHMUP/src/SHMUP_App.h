@@ -4,7 +4,6 @@
 #include <Windows.h>
 #include "global.h"
 #include "VC_App.h"
-#include "SHMUP_GameManager.h"
 
 class SHMUP_App : public VC_App
 {
@@ -19,8 +18,6 @@ public:
 	void Render() override;
 
 private:
-
-	SHMUP_GameManager* m_pGameManager;
 
 };
 

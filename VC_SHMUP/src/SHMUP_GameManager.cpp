@@ -3,7 +3,7 @@
 #include "InputManager.h"
 #include "SHMUP_App.h"
 
-SHMUP_GameManager::SHMUP_GameManager(SHMUP_App* app)
+SHMUP_GameManager::SHMUP_GameManager(SHMUP_App* app) : GameManager(app)
 {
 	m_pApp = app;
 	m_pUIManager = new SHMUP_UIManager(this);
