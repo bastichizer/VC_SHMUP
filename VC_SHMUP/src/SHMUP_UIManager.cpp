@@ -2,6 +2,7 @@
 #include "global.h"
 #include "OverlayGrid.h"
 #include "SHMUP_GameManager.h"
+#include "SHMUP_PlayerSprite.h"
 
 SHMUP_UIManager::SHMUP_UIManager(SHMUP_GameManager* gameManager) : UIManager((GameManager*)gameManager)
 {
@@ -31,22 +32,28 @@ SHMUP_UIManager::SHMUP_UIManager(SHMUP_GameManager* gameManager) : UIManager((Ga
 	static_cast<BackgroundSprite*>(m_backgroundVector.back())->SetVel(QE::Vector2f(speedX, speedY));
 	delete[] mapPathW;
 
-	//int gridWidth = atoi(xmlDoc.FirstChildElement("map")->FirstChildElement("OverlayGrid")->FirstChildElement("width")->GetText());
-	//int gridHeight = atoi(xmlDoc.FirstChildElement("map")->FirstChildElement("OverlayGrid")->FirstChildElement("height")->GetText());
-	//int gridOffsetX = atoi(xmlDoc.FirstChildElement("map")->FirstChildElement("OverlayGrid")->FirstChildElement("offsetX")->GetText());
-	//int gridOffsetY = atoi(xmlDoc.FirstChildElement("map")->FirstChildElement("OverlayGrid")->FirstChildElement("offsetY")->GetText());
-	//int gridSideLength = atoi(xmlDoc.FirstChildElement("map")->FirstChildElement("OverlayGrid")->FirstChildElement("gridSideLength")->GetText());
-	//int gridCenterX = atoi(xmlDoc.FirstChildElement("map")->FirstChildElement("OverlayGrid")->FirstChildElement("gridCenterX")->GetText());
-	//int gridCenterY = atoi(xmlDoc.FirstChildElement("map")->FirstChildElement("OverlayGrid")->FirstChildElement("gridCenterY")->GetText());
-	//const char* overlayPath(xmlDoc.FirstChildElement("map")->FirstChildElement("OverlayGrid")->FirstChildElement("path")->GetText());
-	//strSize = strlen(overlayPath) + 1;
-	//WCHAR* overlayPathW = new WCHAR[strSize];
-	//pConv = NULL;
-	//mbstowcs_s(pConv, overlayPathW, strSize, overlayPath, strSize - 1);
-	//m_backgroundVector.push_back(new OverlayGrid(gridWidth, gridHeight, 0, 0, gridOffsetX, gridOffsetY, gridSideLength, gridCenterX, gridCenterY, overlayPathW, this));
-	//delete[] overlayPathW;
+	int gridWidth = atoi(xmlDoc.FirstChildElement("map")->FirstChildElement("OverlayGrid")->FirstChildElement("width")->GetText());
+	int gridHeight = atoi(xmlDoc.FirstChildElement("map")->FirstChildElement("OverlayGrid")->FirstChildElement("height")->GetText());
+	int gridOffsetX = atoi(xmlDoc.FirstChildElement("map")->FirstChildElement("OverlayGrid")->FirstChildElement("offsetX")->GetText());
+	int gridOffsetY = atoi(xmlDoc.FirstChildElement("map")->FirstChildElement("OverlayGrid")->FirstChildElement("offsetY")->GetText());
+	int gridSideLength = atoi(xmlDoc.FirstChildElement("map")->FirstChildElement("OverlayGrid")->FirstChildElement("gridSideLength")->GetText());
+	int gridCenterX = atoi(xmlDoc.FirstChildElement("map")->FirstChildElement("OverlayGrid")->FirstChildElement("gridCenterX")->GetText());
+	int gridCenterY = atoi(xmlDoc.FirstChildElement("map")->FirstChildElement("OverlayGrid")->FirstChildElement("gridCenterY")->GetText());
+	const char* overlayPath(xmlDoc.FirstChildElement("map")->FirstChildElement("OverlayGrid")->FirstChildElement("path")->GetText());
+	strSize = strlen(overlayPath) + 1;
+	WCHAR* overlayPathW = new WCHAR[strSize];
+	pConv = NULL;
+	mbstowcs_s(pConv, overlayPathW, strSize, overlayPath, strSize - 1);
+	m_backgroundVector.push_back(new OverlayGrid(gridWidth, gridHeight, 0, 0, gridOffsetX, gridOffsetY, gridSideLength, gridCenterX, gridCenterY, overlayPathW, this));
+	delete[] overlayPathW;
 
 	// initialize mid ground elements from data saved in map XML file
+	const char* playerSpritePath("img\\test_player.dds");
+	strSize = strlen(playerSpritePath) + 1;
+	WCHAR* playerSpritePathW = new WCHAR[strSize];
+	pConv = NULL;
+	mbstowcs_s(pConv, playerSpritePathW, strSize, playerSpritePath, strSize - 1);
+	m_midgroundVector.push_back(new SHMUP_PlayerSprite(32, 32, 200, 32, playerSpritePathW, this));
 
 	// initialize foreground UI
 	//// Bottom bar UI background
@@ -66,12 +73,12 @@ SHMUP_UIManager::SHMUP_UIManager(SHMUP_GameManager* gameManager) : UIManager((Ga
 	//m_buttonDelegates.push_back(new Delegate<void, int>(this, &SHMUP_UIManager::ZoomOutPressed));
 	//pButton->PushDelegate(m_buttonDelegates.back());
 
-	//// Add button for toggling the grid overlay on and off
-	//m_foregroundVector.push_back(new UIButton(64, 32, g_windowWidth - 70, 25, 1.0f, 1.0f, 0.5f, L"img\\ToggleGridButton.dds", this));
-	//pButton = static_cast<UIButton*>(m_foregroundVector.back());
-	//pButton->RegisterButtonWithInputManager();
-	//m_buttonDelegates.push_back(new Delegate<void, int>(this, &SHMUP_UIManager::GridTogglePressed));
-	//pButton->PushDelegate(m_buttonDelegates.back());
+	// Add button for toggling the grid overlay on and off
+	m_foregroundVector.push_back(new UIButton(64, 32, g_windowWidth - 70, 25, 1.0f, 1.0f, 0.5f, L"img\\ToggleGridButton.dds", this));
+	UIButton* pButton = static_cast<UIButton*>(m_foregroundVector.back());
+	pButton->RegisterButtonWithInputManager();
+	m_buttonDelegates.push_back(new Delegate<void, int>(this, &SHMUP_UIManager::GridTogglePressed));
+	pButton->PushDelegate(m_buttonDelegates.back());
 
 	//// Add shop menu button
 	//m_foregroundVector.push_back(new UIButton(64, 64, g_windowWidth - 70, 85, 1.0f, 1.0f, 0.5f, L"img\\shop.dds", this));
@@ -88,7 +95,7 @@ SHMUP_UIManager::~SHMUP_UIManager()
 
 void SHMUP_UIManager::Update()
 {
-
+	static_cast<SHMUP_PlayerSprite*>(m_midgroundVector[0])->Update();
 }
 
 void SHMUP_UIManager::ZoomInPressed(int n)

@@ -27,6 +27,9 @@
     <ClCompile Include="src\SHMUP_App.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\SHMUP_PlayerSprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\SHMUP_UIManager.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\SHMUP_App.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SHMUP_PlayerSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

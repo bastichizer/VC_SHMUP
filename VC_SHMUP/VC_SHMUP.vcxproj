@@ -125,11 +125,13 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\SHMUP_App.cpp" />
     <ClCompile Include="src\SHMUP_GameManager.cpp" />
+    <ClCompile Include="src\SHMUP_PlayerSprite.cpp" />
     <ClCompile Include="src\SHMUP_UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\SHMUP_App.h" />
     <ClInclude Include="src\SHMUP_GameManager.h" />
+    <ClInclude Include="src\SHMUP_PlayerSprite.h" />
     <ClInclude Include="src\SHMUP_UIManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
